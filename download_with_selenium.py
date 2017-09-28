@@ -2,7 +2,7 @@
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
 # @Last Modified by:   WuLC
-# @Last Modified time: 2017-09-28 10:32:15
+# @Last Modified time: 2017-09-28 13:18:08
 
 
 ####################################################################################################################
@@ -16,11 +16,12 @@
 
 import os
 import json
-import urllib.request
-import urllib.error
 import sys
 import time
 import logging
+import urllib.request
+import urllib.error
+from urllib.parse import urlparse
 
 from multiprocessing import Pool
 from user_agent import generate_user_agent
@@ -98,14 +99,15 @@ def download_images(link_file_path, download_dir):
     img_dir = download_dir + main_keyword + '/'
     count = 0
     headers = {}
-    headers['User-Agent'] = generate_user_agent()
+    if not os.path.exists(img_dir):
+        os.makedirs(img_dir)
     # start to download images
     with open(link_file_path, 'r') as rf:
-        for link in f:
+        for link in rf:
             try:
-                # change user agent whenever download 200 images
-                if count % 200 == 0:
-                    headers['User-Agent'] = generate_user_agent()
+                o = urlparse(link)
+                headers['User-Agent'] = generate_user_agent()
+                headers['referer'] = o.scheme + '://' + o.hostname
                 req = urllib.request.Request(link.strip(), headers = headers)
                 response = urllib.request.urlopen(req)
                 data = response.read()
@@ -164,7 +166,7 @@ if __name__ == "__main__":
     for keyword in main_keywords:
         link_file_path = link_files_dir + keyword
         get_image_links(keyword, supplemented_keywords, link_file_path)
-    """
+    
 
     # multiple processes
     p = Pool(3) # default number of process is the number of cores of your CPU, change it by yourself
@@ -172,8 +174,8 @@ if __name__ == "__main__":
         p.apply_async(get_image_links, args=(keyword, supplemented_keywords, link_files_dir + keyword))
     p.close()
     p.join()
-    print('All fininshed')
-
+    print('Fininsh getting all image links')
+    """
     ###################################
     # download images with link file
     ###################################
@@ -182,13 +184,13 @@ if __name__ == "__main__":
     for keyword in main_keywords:
         link_file_path = link_files_dir + keyword
         download_images(link_file_path, download_dir)
-    
+    """
     # multiple processes
     p = Pool() # default number of process is the number of cores of your CPU, change it by yourself
     for keyword in main_keywords:
         p.apply_async(download_images, args=(link_files_dir + keyword, download_dir))
     p.close()
     p.join()
-    print('All fininshed')
-    """
+    print('Finish downloading all images')
+    
     
