@@ -28,5 +28,5 @@ Specify `main_keywords` and `supplemented_keywords` in the code, each main_keywo
 
 ## Reference
 
-https://github.com/atif93/google_image_downloader
-https://github.com/hardikvasa/google-images-download
+- https://github.com/atif93/google_image_downloader
+- https://github.com/hardikvasa/google-images-download
