@@ -2,7 +2,7 @@
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
 # @Last Modified by:   WuLC
-# @Last Modified time: 2017-09-28 13:18:08
+# @Last Modified time: 2017-09-28 14:39:24
 
 
 ####################################################################################################################
@@ -27,10 +27,6 @@ from multiprocessing import Pool
 from user_agent import generate_user_agent
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-
-log_file = 'download_selenium.log'
-logging.basicConfig(level=logging.DEBUG, filename=log_file, filemode="a+", format="%(asctime)-15s %(levelname)-8s  %(message)s")
 
 
 def get_image_links(main_keyword, supplemented_keywords, link_file_path, num_requested = 1000):
@@ -96,6 +92,8 @@ def download_images(link_file_path, download_dir):
     """
     print('\n\nStart downloading with link file {0}..........'.format(link_file_path))
     main_keyword = link_file_path.split('/')[-1]
+    log_file = './logs/download_selenium_{0}.log'.format(main_keyword)
+    logging.basicConfig(level=logging.DEBUG, filename=log_file, filemode="a+", format="%(asctime)-15s %(levelname)-8s  %(message)s")
     img_dir = download_dir + main_keyword + '/'
     count = 0
     headers = {}
@@ -117,13 +115,13 @@ def download_images(link_file_path, download_dir):
                 print('Process-{0} download image {1}/{2}.jpg'.format(main_keyword, main_keyword, count))
                 count += 1
             except urllib.error.URLError as e:
-                logging.error('URLError while downloading image {0}\nreason:{1}'.format(link, e.reason))
+                logging.error('URLError while downloading image {0}reason:{1}'.format(link, e.reason))
                 continue
             except urllib.error.HTTPError as e:
-                logging.error('HTTPError while downloading image {0}\nhttp code {1}, reason:{2}'.format(link, e.code, e.reason))
+                logging.error('HTTPError while downloading image {0}http code {1}, reason:{2}'.format(link, e.code, e.reason))
                 continue
             except Exception as e:
-                logging.error('Unexpeted error while downloading image {0}\nerror type:{1}, args:{2}'.format(link, type(e), e.args))
+                logging.error('Unexpeted error while downloading image {0}error type:{1}, args:{2}'.format(link, type(e), e.args))
                 continue
 
 
