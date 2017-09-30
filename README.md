@@ -13,7 +13,7 @@ Versions of FireFox and geckodriver should match, both of them are required by s
 
 ## Details and Configuration
 
-Two types of downloading methods are provided
+Two defferent methods to download are provided
 
 - `download_with_urllib`
 - `download_with_selenium`
@@ -23,8 +23,11 @@ Two types of downloading methods are provided
 
 `download_with_selenium` is to download with selenium and urllib, with selenium, we can directly search and scroll in the browser, so we can get more than 100 images for each searching query
 
-
 Specify `main_keywords` and `supplemented_keywords` in the code, each main_keyword will join with each supplemented_keyword to become a searching query, and one directory will be created for each main_keyword to store the related images.
+
+As to the script `download_images_with_time_limit.py`, it is a replacement of the method "download_images" in script "download_with_selenium.py", because the method "download_images" will always block due to network issue, so I add restriction that each http request can cost at most 10 sceonds, and that is what `download_images_with_time_limit.py` does. 
+
+Pay attention that the time-limited strategy is to use the signal that system provides, and here the `SIGALRM` in unix-like system is adopted, so this script should run within unix-like system rather than Windows. However, the network blocking thing happen when I run the script in my network, but not sure whether that happens in yours, so you can test with `download_with_selenium.py` firstly, if the network blocking thing happen, change to the script `download_images_with_time_limit.py`
 
 More details about the repository can be obtained in this blog: http://wulc.me/2017/09/23/Google%20%E5%9B%BE%E7%89%87%E7%88%AC%E8%99%AB/
 
