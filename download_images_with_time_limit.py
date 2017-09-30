@@ -2,7 +2,7 @@
 # @Author: LC
 # @Date:   2017-09-30 09:13:43
 # @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 15:07:32
+# @Last Modified time: 2017-09-30 15:42:32
 
 ###########################################################################################################
 # download images with time limit 
@@ -139,4 +139,3 @@ if __name__ == '__main__':
     p.close()
     p.join()
     print('Finish downloading all images')
-    
