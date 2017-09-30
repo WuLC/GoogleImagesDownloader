@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: lc
 # @Date:   2017-09-25 23:54:24
-# @Last Modified by:   WuLC
-# @Last Modified time: 2017-09-27 22:59:09
+# @Last Modified by:   LC
+# @Last Modified time: 2017-09-29 20:59:13
 
 
 ####################################################################################################################
@@ -99,7 +99,7 @@ def download_images(main_keyword, supplemented_keywords, download_dir):
         image_links = image_links.union(parse_page(url))
         print('Process {0} get {1} links so far'.format(os.getpid(), len(image_links)))
         time.sleep(2)
-    print ("Process {0} get totally {1} links".format(os.getpid(), len(image_links)))   
+    print ("Process {0} get totally {1} links".format(os.getpid(), len(image_links)))
 
     print ("Start downloading...")
     count = 1
