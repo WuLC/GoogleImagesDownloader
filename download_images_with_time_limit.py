@@ -2,7 +2,15 @@
 # @Author: LC
 # @Date:   2017-09-30 09:13:43
 # @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 11:50:21
+# @Last Modified time: 2017-09-30 15:07:32
+
+###########################################################################################################
+# download images with time limit 
+# bacause the method "download_images" in script "download_with_selenium.py" always block due to network issue
+# and this file is a replacement of the method "download_images" 
+# Pay attention that time-limited strategy is to use the signal that system provides
+# and here the SIGALRM in unix-like system is adopted, so this script should run within unix-like system
+###########################################################################################################
 
 import os
 import time
@@ -14,15 +22,6 @@ from urllib.parse import urlparse
 from multiprocessing import Pool
 
 from user_agent import generate_user_agent
-
-
-###########################################################################################################
-# download images with time limit 
-# bacause the method "download_images" in file "download_with_selenium.py" always block due to network issue
-# and this file is a replacement of the method "download_images" 
-# Pay attention that time-limited strategy is to use the signal that system provides
-# and here the SIGALRM in unix-like system is adopted, so this script should run within unix-like system
-###########################################################################################################
 
 # define custom exception
 class TimeLimitError(Exception):
