@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
-# @Last Modified by:   WuLC
-# @Last Modified time: 2017-09-28 14:39:24
+# @Last Modified by:   LC
+# @Last Modified time: 2017-09-30 09:57:01
 
 
 ####################################################################################################################
@@ -16,7 +16,6 @@
 
 import os
 import json
-import sys
 import time
 import logging
 import urllib.request
@@ -90,9 +89,9 @@ def download_images(link_file_path, download_dir):
     Returns:
         None
     """
-    print('\n\nStart downloading with link file {0}..........'.format(link_file_path))
+    print('Start downloading with link file {0}..........'.format(link_file_path))
     main_keyword = link_file_path.split('/')[-1]
-    log_file = './logs/download_selenium_{0}.log'.format(main_keyword)
+    log_file = './download_selenium_{0}.log'.format(main_keyword)
     logging.basicConfig(level=logging.DEBUG, filename=log_file, filemode="a+", format="%(asctime)-15s %(levelname)-8s  %(message)s")
     img_dir = download_dir + main_keyword + '/'
     count = 0
@@ -104,8 +103,12 @@ def download_images(link_file_path, download_dir):
         for link in rf:
             try:
                 o = urlparse(link)
-                headers['User-Agent'] = generate_user_agent()
-                headers['referer'] = o.scheme + '://' + o.hostname
+                ref = o.scheme + '://' + o.hostname
+                #ref = 'https://www.google.com'
+                ua = generate_user_agent()
+                headers['User-Agent'] = ua
+                headers['referer'] = ref
+                print('\n{0}\n{1}\n{2}'.format(link.strip(), ref, ua))
                 req = urllib.request.Request(link.strip(), headers = headers)
                 response = urllib.request.urlopen(req)
                 data = response.read()
@@ -114,13 +117,20 @@ def download_images(link_file_path, download_dir):
                     wf.write(data)
                 print('Process-{0} download image {1}/{2}.jpg'.format(main_keyword, main_keyword, count))
                 count += 1
+                if count % 10 == 0:
+                    print('Process-{0} is sleeping'.format(main_keyword))
+                    time.sleep(5)
+
             except urllib.error.URLError as e:
+                print('URLError')
                 logging.error('URLError while downloading image {0}reason:{1}'.format(link, e.reason))
                 continue
             except urllib.error.HTTPError as e:
+                print('HTTPError')
                 logging.error('HTTPError while downloading image {0}http code {1}, reason:{2}'.format(link, e.code, e.reason))
                 continue
             except Exception as e:
+                print('Unexpected Error')
                 logging.error('Unexpeted error while downloading image {0}error type:{1}, args:{2}'.format(link, type(e), e.args))
                 continue
 
@@ -190,5 +200,4 @@ if __name__ == "__main__":
     p.close()
     p.join()
     print('Finish downloading all images')
-    
     
