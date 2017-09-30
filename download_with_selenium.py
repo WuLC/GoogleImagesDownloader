@@ -2,7 +2,7 @@
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
 # @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 10:50:09
+# @Last Modified time: 2017-09-30 10:54:36
 
 
 ####################################################################################################################
@@ -79,7 +79,7 @@ def get_image_links(main_keyword, supplemented_keywords, link_file_path, num_req
     print('Store all the links in file {0}'.format(link_file_path))
 
 
-def download_images(link_file_path, download_dir):
+def download_images(link_file_path, download_dir, log_dir):
     """download images whose links are in the link file
     
     Args:
@@ -90,10 +90,9 @@ def download_images(link_file_path, download_dir):
         None
     """
     print('Start downloading with link file {0}..........'.format(link_file_path))
-    main_keyword = link_file_path.split('/')[-1]
-    log_dir = './logs/'
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
+    main_keyword = link_file_path.split('/')[-1]
     log_file = log_dir + 'download_selenium_{0}.log'.format(main_keyword)
     logging.basicConfig(level=logging.DEBUG, filename=log_file, filemode="a+", format="%(asctime)-15s %(levelname)-8s  %(message)s")
     img_dir = download_dir + main_keyword + '/'
@@ -168,6 +167,7 @@ if __name__ == "__main__":
 
     download_dir = './data/'
     link_files_dir = './data/link_files/'
+    log_dir = './logs/'
 
     ###################################
     # get image links and store in file
@@ -199,7 +199,7 @@ if __name__ == "__main__":
     # multiple processes
     p = Pool() # default number of process is the number of cores of your CPU, change it by yourself
     for keyword in main_keywords:
-        p.apply_async(download_images, args=(link_files_dir + keyword, download_dir))
+        p.apply_async(download_images, args=(link_files_dir + keyword, download_dir, log_dir))
     p.close()
     p.join()
     print('Finish downloading all images')
