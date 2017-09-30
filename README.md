@@ -25,7 +25,7 @@ Two defferent methods to download are provided
 
 Specify `main_keywords` and `supplemented_keywords` in the code, each main_keyword will join with each supplemented_keyword to become a searching query, and one directory will be created for each main_keyword to store the related images.
 
-As to the script `download_images_with_time_limit.py`, it is a replacement of the method "download_images" in script "download_with_selenium.py", because the method "download_images" will always block due to network issue, so I add restriction that each http request can cost at most 10 sceonds, and that is what `download_images_with_time_limit.py` does. 
+As to the script `download_images_with_time_limit.py`, it is a replacement of the method `download_images` in script `download_with_selenium.py`, because the method `download_images` will always block due to network issue, so I add restriction that each http request can cost at most 10 sceonds, and that is what `download_images_with_time_limit.py` does. 
 
 Pay attention that the time-limited strategy is to use the signal that system provides, and here the `SIGALRM` in unix-like system is adopted, so this script should run within unix-like system rather than Windows. However, the network blocking thing happen when I run the script in my network, but not sure whether that happens in yours, so you can test with `download_with_selenium.py` firstly, if the network blocking thing happen, change to the script `download_images_with_time_limit.py`
 
