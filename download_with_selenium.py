@@ -2,7 +2,7 @@
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
 # @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 09:57:01
+# @Last Modified time: 2017-09-30 10:50:09
 
 
 ####################################################################################################################
@@ -91,7 +91,10 @@ def download_images(link_file_path, download_dir):
     """
     print('Start downloading with link file {0}..........'.format(link_file_path))
     main_keyword = link_file_path.split('/')[-1]
-    log_file = './download_selenium_{0}.log'.format(main_keyword)
+    log_dir = './logs/'
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_file = log_dir + 'download_selenium_{0}.log'.format(main_keyword)
     logging.basicConfig(level=logging.DEBUG, filename=log_file, filemode="a+", format="%(asctime)-15s %(levelname)-8s  %(message)s")
     img_dir = download_dir + main_keyword + '/'
     count = 0
