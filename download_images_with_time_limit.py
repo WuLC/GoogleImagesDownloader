@@ -2,7 +2,7 @@
 # @Author: LC
 # @Date:   2017-09-30 09:13:43
 # @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 15:42:32
+# @Last Modified time: 2017-09-30 16:52:08
 
 ###########################################################################################################
 # download images with time limit 
@@ -23,9 +23,10 @@ from multiprocessing import Pool
 
 from user_agent import generate_user_agent
 
-# define custom exception
+
 class TimeLimitError(Exception):
     def __init__(self, value):
+        Exception.__init__()
         self.value = value
 
     def __str__(self):
@@ -79,14 +80,13 @@ def download_with_time_limit(link_file_path, download_dir, log_dir, limit_time =
                 if count % 10 == 0:
                     print('Process-{0} is sleeping'.format(main_keyword))
                     time.sleep(5)
-
-            except urllib.error.URLError as e:
-                print('URLError')
-                logging.error('URLError while downloading image {0}reason:{1}'.format(link, e.reason))
-                continue
             except urllib.error.HTTPError as e:
                 print('HTTPError')
                 logging.error('HTTPError while downloading image {0}http code {1}, reason:{2}'.format(link, e.code, e.reason))
+                continue
+            except urllib.error.URLError as e:
+                print('URLError')
+                logging.error('URLError while downloading image {0}reason:{1}'.format(link, e.reason))
                 continue
             except Exception as e:
                 print('Unexpected Error')
