@@ -13,7 +13,7 @@ This repository can download images from google with specified keywords
 
 Here is an example of downloading with selenium using 2 processes
 
-[[https://github.com//WuLC/GoogleImagesDownloader/blob/master/imgs/download_with_selenium.gif|alt=octocat]]
+![download with selenium][3]
 
 ## Details and Configuration
 
