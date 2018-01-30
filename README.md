@@ -1,17 +1,19 @@
 # GoogleImagesDownloader
 
-Download images from google with specified keywords for searching
+This repository can download images from google with specified keywords
 
 ## Requirements
 
 - python 3.5
 - selenium 3.6.0
-- Firefox
+- FireFox browser
 - geckodriver
 
-Versions of FireFox and geckodriver should match, both of them are required by selenium
+Versions of FireFox and [geckodriver][1] should match, both of them are required by selenium
 
 ## Details and Configuration
+
+### Two Methods
 
 Two different methods are provided
 
@@ -23,7 +25,13 @@ Two different methods are provided
 
 `download_with_selenium` is to download with package `selenium` and `urllib`, with selenium, we can directly search and scroll in the browser, so we can get more than 100 images for each searching query
 
-Specify `main_keywords` and `supplemented_keywords` in the code, each `main_keyword` will join with each `supplemented_keyword` to become a searching query, and one directory will be created for each main_keyword to store the related images.
+**Both of the above methods support downloading with single process or mulitple processes**, and `download_with_selenium` will firstly store the actual links of images in a file, then download the actual images with the file, while `download_with_urllib` will directly download all the images since the number if small
+
+**Specify `main_keywords` and `supplemented_keywords` in the code**, each `main_keyword` will join with each `supplemented_keyword` to become a searching query, and one directory will be created for each main_keyword to store the related images.The following image is a simple example 
+
+![keywords example][2]
+
+### Download With Time Limit
 
 As to the script `download_images_with_time_limit.py`, it is a replacement of the method `download_images` in script `download_with_selenium.py`, because the method `download_images` will always block due to network issue, so I add restriction that each http request can cost at most 10 sceonds, and that is what `download_images_with_time_limit.py` does. 
 
@@ -35,3 +43,7 @@ More details about the repository can be obtained in [this blog](http://wulc.me/
 
 - https://github.com/atif93/google_image_downloader
 - https://github.com/hardikvasa/google-images-download
+
+
+  [1]: https://github.com/mozilla/geckodriver/releases
+  [2]: http://static.zybuluo.com/WuLiangchao/pcnc2a7dge8y2jh0lt15l05l/image_1c52u2p8r1t8hfkmsie10lr1d1qm.png
