@@ -157,11 +157,10 @@ if __name__ == '__main__':
 
     download_dir = './data/'
 
-    """
     # download with single process
-    for i in range(len(main_keywords)):
-        download_images(main_keywords[i], supplemented_keywords, download_dir)
-    """
+    # for i in range(len(main_keywords)):
+    #     download_images(main_keywords[i], supplemented_keywords, download_dir)
+
 
     # download with multiple process
     p = Pool() # number of process is the number of cores of your CPU
