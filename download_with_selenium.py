@@ -172,11 +172,10 @@ if __name__ == "__main__":
     ###################################
     # get image links and store in file
     ###################################
-    """
     # single process
-    for keyword in main_keywords:
-        link_file_path = link_files_dir + keyword
-        get_image_links(keyword, supplemented_keywords, link_file_path)
+    # for keyword in main_keywords:
+    #     link_file_path = link_files_dir + keyword
+    #     get_image_links(keyword, supplemented_keywords, link_file_path)
     
 
     # multiple processes
@@ -186,16 +185,15 @@ if __name__ == "__main__":
     p.close()
     p.join()
     print('Fininsh getting all image links')
-    """
+    
     ###################################
     # download images with link file
     ###################################
-    """
     # single process
-    for keyword in main_keywords:
-        link_file_path = link_files_dir + keyword
-        download_images(link_file_path, download_dir)
-    """
+    # for keyword in main_keywords:
+    #     link_file_path = link_files_dir + keyword
+    #     download_images(link_file_path, download_dir)
+    
     # multiple processes
     p = Pool() # default number of process is the number of cores of your CPU, change it by yourself
     for keyword in main_keywords:
@@ -203,4 +201,3 @@ if __name__ == "__main__":
     p.close()
     p.join()
     print('Finish downloading all images')
-    
