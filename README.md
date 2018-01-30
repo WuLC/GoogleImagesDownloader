@@ -6,10 +6,14 @@ This repository can download images from google with specified keywords
 
 - python 3.5
 - selenium 3.6.0
-- FireFox browser
+- Firefox
 - geckodriver
 
-Versions of FireFox and [geckodriver][1] should match, both of them are required by selenium
+**Firefox and geckodriver are required by selenium, and Firefox 55 or greater is recommended, cause [geckodriver][1] support that best. As for geckodriver, just download the latest version of geckodriver from [here][2], then add it to the PATH environment variable.**
+
+Here is an example of downloading with selenium using 2 processes
+
+![download with selenium][3]
 
 ## Details and Configuration
 
@@ -29,7 +33,7 @@ Two different methods are provided
 
 **Specify `main_keywords` and `supplemented_keywords` in the code**, each `main_keyword` will join with each `supplemented_keyword` to become a searching query, and one directory will be created for each main_keyword to store the related images.The following image is a simple example 
 
-![keywords example][2]
+![keywords example][4]
 
 ### Download With Time Limit
 
@@ -37,7 +41,7 @@ As to the script `download_images_with_time_limit.py`, it is a replacement of th
 
 Pay attention that the time-limited strategy is to use the signal that system provides, and here the `SIGALRM` in unix-like system is adopted, so this script should run with unix-like system rather than Windows. However, the network blocking thing happened when I ran the script in my network, but not sure whether this will happen in yours, so you can test with `download_with_selenium.py` firstly, if the downloading task blocks, change to the script `download_images_with_time_limit.py`
 
-More details about the repository can be obtained in [this blog](http://wulc.me/2017/09/23/Google%20%E5%9B%BE%E7%89%87%E7%88%AC%E8%99%AB/)
+More details about the repository can be obtained in [this blog][5]
 
 ## Reference
 
@@ -45,5 +49,8 @@ More details about the repository can be obtained in [this blog](http://wulc.me/
 - https://github.com/hardikvasa/google-images-download
 
 
-  [1]: https://github.com/mozilla/geckodriver/releases
-  [2]: http://static.zybuluo.com/WuLiangchao/pcnc2a7dge8y2jh0lt15l05l/image_1c52u2p8r1t8hfkmsie10lr1d1qm.png
+  [1]: https://github.com/mozilla/geckodriver
+  [2]: https://github.com/mozilla/geckodriver/releases
+  [3]: http://static.zybuluo.com/WuLiangchao/ay3292ffeod9mckv502emhbv/ezgif-1-a939efa4ad.gif
+  [4]: http://static.zybuluo.com/WuLiangchao/pcnc2a7dge8y2jh0lt15l05l/image_1c52u2p8r1t8hfkmsie10lr1d1qm.png
+  [5]: http://wulc.me/2017/09/23/Google%20%E5%9B%BE%E7%89%87%E7%88%AC%E8%99%AB/
