@@ -33,7 +33,7 @@ Two different methods are provided
 
 **Specify `main_keywords` and `supplemented_keywords` in the code**, each `main_keyword` will join with each `supplemented_keyword` to become a searching query, and one directory will be created for each main_keyword to store the related images.The following image is a simple example 
 
-![keywords example][4]
+<img src="/imgs/keywords.png?raw=true">
 
 ### Download With Time Limit
 
