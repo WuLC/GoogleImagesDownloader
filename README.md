@@ -43,11 +43,6 @@ Pay attention that the time-limited strategy is to use the signal that system pr
 
 More details about the repository can be obtained in [this blog][5]
 
-## Reference
-
-- https://github.com/atif93/google_image_downloader
-- https://github.com/hardikvasa/google-images-download
-
 
   [1]: https://github.com/mozilla/geckodriver
   [2]: https://github.com/mozilla/geckodriver/releases
