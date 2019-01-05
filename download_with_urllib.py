@@ -20,6 +20,7 @@ import re
 import logging
 import urllib.request
 import urllib.error
+from urllib.parse import quote
 
 from multiprocessing import Pool
 from user_agent import generate_user_agent
@@ -93,7 +94,7 @@ def download_images(main_keyword, supplemented_keywords, download_dir):
 
     for j in range(len(supplemented_keywords)):
         print('Process {0} supplemented keyword: {1}'.format(os.getpid(), supplemented_keywords[j]))
-        search_query = (main_keyword + ' ' + supplemented_keywords[j]).replace(' ','%20')
+        search_query = quote(main_keyword + ' ' + supplemented_keywords[j])
         # url = 'https://www.google.com/search?q=' + search_query + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
         url = 'https://www.google.com/search?q=' + search_query + '&source=lnms&tbm=isch'
         image_links = image_links.union(parse_page(url))
@@ -155,6 +156,14 @@ if __name__ == '__main__':
                 'movie face'
                 ]
 
+    # test for chinese
+    # main_keywords = ['高兴', '悲伤', '惊讶']
+    # supplemented_keywords = ['人脸']
+
+    # test for japanese
+    # main_keywords = ['喜びます', 'きょうがいする', '悲しみ']
+    # supplemented_keywords = ['顔つき']
+    
     download_dir = './data/'
 
     # download with single process

@@ -20,7 +20,7 @@ import time
 import logging
 import urllib.request
 import urllib.error
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 
 from multiprocessing import Pool
 from user_agent import generate_user_agent
@@ -46,7 +46,7 @@ def get_image_links(main_keyword, supplemented_keywords, link_file_path, num_req
     img_urls = set()
     driver = webdriver.Firefox()
     for i in range(len(supplemented_keywords)):
-        search_query = main_keyword + ' ' + supplemented_keywords[i]
+        search_query = quote(main_keyword + ' ' + supplemented_keywords[i])
         url = "https://www.google.com/search?q="+search_query+"&source=lnms&tbm=isch"
         driver.get(url)
         
@@ -165,9 +165,20 @@ if __name__ == "__main__":
                 'movie face'
                 ]
 
+    # test for chinese
+    # main_keywords = ['高兴', '悲伤', '惊讶']
+    # supplemented_keywords = ['人脸']
+
+    # test for japanese
+    # main_keywords = ['喜びます', 'きょうがいする', '悲しみ']
+    # supplemented_keywords = ['顔つき']
+
     download_dir = './data/'
     link_files_dir = './data/link_files/'
     log_dir = './logs/'
+    for d in [download_dir, link_files_dir, log_dir]:
+        if not os.path.exists(d):
+            os.makedirs(d)
 
     ###################################
     # get image links and store in file
