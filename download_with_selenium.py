@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: WuLC
 # @Date:   2017-09-27 23:02:19
-# @Last Modified by:   LC
-# @Last Modified time: 2017-09-30 10:54:36
+# @Last Modified by:   Arthur 
+# @Last Modified time: 2020-03-11 15:36:58
 
 
 ####################################################################################################################
@@ -49,14 +49,13 @@ def get_image_links(main_keyword, supplemented_keywords, link_file_path, num_req
         search_query = quote(main_keyword + ' ' + supplemented_keywords[i])
         url = "https://www.google.com/search?q="+search_query+"&source=lnms&tbm=isch"
         driver.get(url)
-        
         for _ in range(number_of_scrolls):
             for __ in range(10):
                 # multiple scrolls needed to show all 400 images
                 driver.execute_script("window.scrollBy(0, 1000000)")
                 time.sleep(2)
             # to load next 400 images
-            time.sleep(5)
+            time.sleep(1)
             try:
                 driver.find_element_by_xpath("//input[@value='Show more results']").click()
             except Exception as e:
@@ -64,11 +63,28 @@ def get_image_links(main_keyword, supplemented_keywords, link_file_path, num_req
                 break
 
         # imges = driver.find_elements_by_xpath('//div[@class="rg_meta"]') # not working anymore
-        imges = driver.find_elements_by_xpath('//div[contains(@class,"rg_meta")]')
-        for img in imges:
-            img_url = json.loads(img.get_attribute('innerHTML'))["ou"]
-            # img_type = json.loads(img.get_attribute('innerHTML'))["ity"]
-            img_urls.add(img_url)
+        # imges = driver.find_elements_by_xpath('//div[contains(@class,"rg_meta")]') # not working anymore
+        thumbs = driver.find_elements_by_xpath('//a[@class="wXeWr islib nfEiy mM5pbd"]')
+
+        print(len(thumbs))
+        for thumb in thumbs:
+            try:
+                thumb.click()
+                time.sleep(1)
+            except e:
+                print("Error clicking one thumbnail")
+
+            url_elements = driver.find_elements_by_xpath('//img[@class="n3VNCb"]')
+            for url_element in url_elements:
+                try:
+                    url = url_element.get_attribute('src')
+                except e:
+                    print("Error getting one url")
+
+                if url.startswith('http') and not url.startswith('https://encrypted-tbn0.gstatic.com'):
+                    img_urls.add(url)
+                    print("Found image url: " + url)
+
         print('Process-{0} add keyword {1} , got {2} image urls so far'.format(main_keyword, supplemented_keywords[i], len(img_urls)))
     print('Process-{0} totally get {1} images'.format(main_keyword, len(img_urls)))
     driver.quit()
