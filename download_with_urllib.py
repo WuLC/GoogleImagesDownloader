@@ -63,7 +63,7 @@ def parse_page(url):
     """
     page_content = download_page(url)
     if page_content:
-        link_list = re.findall('"ou":"(.*?)"', page_content)
+        link_list = re.findall('src="(.*?)"', page_content)
         if len(link_list) == 0:
             print('get 0 links from page {0}'.format(url))
             logging.info('get 0 links from page {0}'.format(url))
